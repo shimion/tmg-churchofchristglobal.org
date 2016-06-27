@@ -107,7 +107,7 @@ return array(
 
 	'web' => array(
 		'label'        => __('Web', 'ait-toolkit'),
-		'type'         => 'url',
+		'type'         => 'text',
 		'default'      => '',
 		'capabilities' => true,
 		'help'         => __('Web address, use valid URL format with http://', 'ait-toolkit'),
@@ -121,14 +121,14 @@ return array(
 		'help'         => __('Text displayed instead of full web address', 'ait-toolkit'),
 	),
 
-	array('section' => array('id' => 'itemOpeningHours', 'title' => __('Opening Hours', 'ait-toolkit'), 'capabilities' => true)),
+	array('section' => array('id' => 'itemOpeningHours', 'title' => __('Meeting Hours', 'ait-toolkit'), 'capabilities' => true)),
 
 	'displayOpeningHours' => array(
 		'label'   => __('Show', 'ait-toolkit'),
 		'type'    => 'on-off',
 		'default' => false,
 		'basic'   => true,
-		'help'    => __('Display or hide Opening Hours section', 'ait-toolkit'),
+		'help'    => __('Display or hide Meeting Hours section', 'ait-toolkit'),
 	),
 
 	'openingHoursMonday' => array(

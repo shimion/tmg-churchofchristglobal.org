@@ -12,6 +12,30 @@ function aitRenderLatteTemplate($template, $params = array())
 
 
 
+function item_marker_new($item, $meta, $imageUrl){
+	global $options;
+	$imageUrl = $item->hasImage ? $item->imageUrl : get_site_url().'/wp-content/uploads/cache/images/local/default_featured_img-2632838785.jpg';
+	$return .='<div class="item-data">';
+	$return .='<h3>'.$item->title.'</h3>';
+	$return .='<span class="item-address">'.$meta->map['address'].'</span>';
+	$return .='<a href="'.$item->permalink.'">';
+	$return .='<span class="item-button">Show More</span>';
+	$return .='</a>';
+	$return .='</div>';
+	$return .='<div class="item-picture">';
+	$return .='<img src="'.$imageUrl.'" width="145" height="180"  alt="image">';
+	if (!empty($meta->telephone)){
+	$return .='<a href="tel:' .$meta->telephone. '" class="phone">' .$meta->telephone. '</a>';
+	}
+	$return .='</div>';
+
+
+	return $return;
+	
+	}
+
+
+
 function aitGetItemsMarkers($query)
 {
     $markers = array();
@@ -28,8 +52,9 @@ function aitGetItemsMarkers($query)
         $options = aitOptions()->getOptionsByType('theme');
 		$featuredImage = $item->imageUrl;
         $imageLink = empty($featuredImage) ? $options['item']['noFeatured'] : $item->imageUrl;
+		//$context = aitRenderLatteTemplate('/parts/item-marker.php', array('item' => $item, 'meta' => $meta));
 
-        $context = aitRenderLatteTemplate('/parts/item-marker.php', array('item' => $item, 'meta' => $meta));
+        $context = item_marker_new($item,$meta, $imageLink);
         $catData = aitItemCategoriesData($item->id);
         $marker = (object)array(
             'lat'        => $meta->map['latitude'],

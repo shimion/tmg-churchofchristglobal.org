@@ -5,13 +5,13 @@
 
 	<span class="resources-data">
 		<span class="resources-count">{count($resources)}</span>
-		<span class="resources-text">{__ 'Resources'}</span>
+		<span class="resources-text">{__ 'Listings'}</span>
 	</span>
 	{if is_user_logged_in()}
-	<a href="{!admin_url('post-new.php?post_type=ait-item')}" class="resources-button ait-sc-button">{__ 'Add'}</a>
+	<a href="/dev/add-lisiting/" class="resources-button ait-sc-button">{__ 'Add'}</a>
 	{else}
 	{var $link = get_permalink( $options->theme->header->headerResourcesButtonLink )}
-	<a href="{!$link}" class="resources-button ait-sc-button">{__ 'Add'}</a>
+	<a href="/dev/add-lisiting/" class="resources-button ait-sc-button">{__ 'Add'}</a>
 	{/if}
 
 </div>

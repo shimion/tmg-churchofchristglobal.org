@@ -1,6 +1,6 @@
 {if $meta->displayOpeningHours}
 <div class="elm-opening-hours-main">
-	<h2>{__ 'Opening Hours'}</h2>
+	<h2>{__ 'Meeting Hours'}</h2>
 	<div class="day-container">
 		<div class="day-wrapper">
 			<div class="day-title"><h5>{__ 'Monday'}</h5></div>

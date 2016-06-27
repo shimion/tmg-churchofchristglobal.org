@@ -59,8 +59,8 @@ function register_portal_user() {
 		if($_REQUEST['ait-action'] == 'register'){
 			$redirect = !empty($_POST['redirect_to']) ? $_POST['redirect_to'] : home_url();
 
-			if(!empty($_POST['user_login']) && !empty($_POST['user_email']) && is_email($_POST['user_email'])){
-				if(username_exists( $_POST['user_login'] ) == null && email_exists( $_POST['user_email'] ) == false){
+			if(!empty($_POST['first_name']) && !empty($_POST['last_name']) && is_email($_POST['user_email'])){
+				if(username_exists( $_POST['first_name'].$_POST['last_name'] ) == null && email_exists( $_POST['user_email'] ) == false){
 
 					$packages = new ThemePackages();
 					$package = $packages->getPackageBySlug($_POST['user_role']);
@@ -73,13 +73,25 @@ function register_portal_user() {
 					if($isFree){
 						// register user automatically
 						$user_data = array(
-							'user_login'	=> $_POST['user_login'],
+							'user_login'	=> $_POST['user_email'],
 							'user_pass'		=> wp_generate_password(),
 							'user_email'	=> $_POST['user_email'],
-							'role'			=> $_POST['user_role']
+							'role'			=> $_POST['user_role'],
+							'first_name'			=> $_POST['first_name'],
+							'last_name'			=> $_POST['last_name'],
+							'phonenumber'			=> $_POST['phonenumber'],
+							'baptized'			=> $_POST['baptized']
 							// set the subscriber role
 						);
 						$user_id = wp_insert_user( $user_data ) ;
+						update_user_meta($user_id, 'phonenumber', $_POST['phonenumber']);
+						update_user_meta($user_id, 'baptized', $_POST['baptized']);
+						
+						
+						lets_add_to_mailchamp(array('user_id' => $user_id, 'first_name'=>$_POST['first_name'], 'last_name'=>$_POST['last_name'], 'phonenumber'=>$_POST['phonenumber'], 'baptized'=>$_POST['baptized']));
+						
+						
+						
 
 						if(class_exists('AitClaimListing')){
 							$post_id = intval($_POST['form_post']);
@@ -98,14 +110,20 @@ function register_portal_user() {
 
 					} else {
 						$user_data = array(
-							'user_login'	=> $_POST['user_login'],
+							'user_login'	=> $_POST['first_name'].$_POST['last_name'],
 							'user_pass'		=> wp_generate_password(),
 							'user_email'	=> $_POST['user_email'],
-							'role'			=> 'subscriber'//$_POST['user_role']
+							'role'			=> 'subscriber', //$_POST['user_role']
+							'first_name'			=> $_POST['first_name'],
+							'last_name'			=> $_POST['last_name'],
+							'phonenumber'			=> $_POST['phonenumber'],
+							'baptized'			=> $_POST['baptized']
 							// set the subscriber role
 						);
 						$user_id = wp_insert_user( $user_data ) ;
-
+						update_user_meta($user_id, 'phonenumber', $_POST['phonenumber']);
+						update_user_meta($user_id, 'baptized', $_POST['baptized']);
+						
 						if(class_exists('AitClaimListing')){
 							$post_id = intval($_POST['form_post']);
 							if(filter_var($_POST['claim_listing'], FILTER_VALIDATE_BOOLEAN, false)){

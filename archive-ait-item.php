@@ -20,8 +20,6 @@
 
 		<div class="ajax-container">
 			<div class="content">
-				
-
 				{customLoop from $query as $post}
 					{var $categories = get_the_terms($post->id, 'ait-items')}
 

@@ -73,14 +73,27 @@ class AitLoginWidget extends WP_Widget
 							$result .= $instance['description_register'] != '' ? '<p>'.$instance['description_register'].'</p>' : '';
 							$result .= '<form method="post" action="'.home_url('/').'?ait-action=register" class="wp-user-form user-register-form">';
 								$result .= '<p class="input-container input-username">';
+									$result .= '<label for="user_login">'.__('First Name', 'ait').'</label>';
+									$result .= '<input type="text" name="first_name" id="first_name" value="" size="20" tabindex="101" />';
+								$result .= '</p>';
+								$result .= '<p class="input-container input-username">';
+									$result .= '<label for="user_login">'.__('Last Name', 'ait').'</label>';
+									$result .= '<input type="text" name="last_name" id="last_name" value="" size="20" tabindex="101" />';
+								$result .= '</p>';
+								/*$result .= '<p class="input-container input-username" style="display:none;">';
 									$result .= '<label for="user_login">'.__('Username', 'ait').'</label>';
 									$result .= '<input type="text" name="user_login" id="user_login" value="" size="20" tabindex="101" />';
+								$result .= '</p>';*/
+								$result .= '<p class="input-container input-username">';
+									$result .= '<label for="user_login">'.__('Phone Number', 'ait').'</label>';
+									$result .= '<input type="text" name="phonenumber" id="user_login" value="" size="20" tabindex="101" />';
 								$result .= '</p>';
 								$result .= '<p class="input-container input-email">';
 									$result .= '<label for="user_email">'.__('Email', 'ait').'</label>';
 									$result .= '<input type="text" name="user_email" id="user_email" value="" size="20" tabindex="102" />';
 								$result .= '</p>';
-
+								$result .= '<p class="input-container input-role"><select placeholder="Baptized?" style="display: none;" sb="97750039" id="baptized" name="baptized" tabindex="103" required><option value="">Baptized?</option><option value="yes">Yes</option><option value="no">No</option></select></p>';
+									
 								$rand = rand();
 								$themeOptions = aitOptions()->getOptionsByType('theme');
 								$themePackages = new ThemePackages();
@@ -190,6 +203,10 @@ class AitLoginWidget extends WP_Widget
 									/* CAPTCHA */
 									if(!empty($instance['captcha'])){
 									$result .= '<div class="captcha-error" style="display: none">'.__('Captcha failed to verify','ait').'</div>';
+									$result .= '<div class="ajax-error" style="display: none">'.__('There was a server error during ajax request','ait').'</div>';
+									}
+									if(!empty($instance['baptized'])){
+									$result .= '<div class="captcha-error" style="display: none">'.__('Please select the baptized field.','ait').'</div>';
 									$result .= '<div class="ajax-error" style="display: none">'.__('There was a server error during ajax request','ait').'</div>';
 									}
 									/* CAPTCHA */

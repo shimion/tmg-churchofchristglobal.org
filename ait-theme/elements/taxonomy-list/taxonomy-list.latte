@@ -16,12 +16,20 @@
 <div id="{$htmlId}" class="elm-item-organizer {$htmlClass}">
 
 	{var $taxonomy = $el->option('taxonomy') == 'aititems' ? 'ait-items' : 'ait-locations'}
-
+	{if $taxonomy == 'ait-locations' }
+	{var $terms = get_terms($taxonomy, array(
+		'orderby' => $el->option(orderby),
+		'order' => $el->option(order),
+		'exclude' => '105, 168, 174, 179',
+		'parent' => 0
+	))}
+	{else}
 	{var $terms = get_terms($taxonomy, array(
 		'orderby' => $el->option(orderby),
 		'order' => $el->option(order),
 		'parent' => 0
 	))}
+	{/if}
 
 	{if is_array($terms) && count($terms) > 0}
 		{var $layout = $el->option->layout}
@@ -62,7 +70,86 @@
 		{if $layout == box}
 			{* box layout *}
 			<div n:class='elm-item-organizer-container, "column-{$numOfColumns}", "layout-{$layout}", "img-type-{$imageDisplay}", "img-size-{$imageHeight}", $imageGrey ? greyscale, $enableCarousel ? carousel-container : carousel-disabled,' data-cols="{$numOfColumns}" data-first="1" data-last="{= ceil(count($terms) / $numOfRows)}">
+			
+			{if $taxonomy == 'ait-locations'}
+			<div data-id="00" class="item item0">
+					<a href="{get_site_url()}/loc/united-states/">
+						
+
+
+							<div class="item-thumbnail">
+								<div class="item-thumbnail-wrap">
+								{var $image = get_site_url() . "/wp-content/uploads/2016/05/103793-3d-glossy-green-orb-icon-culture-world11-2.png" }
+									<img src="{$image}" alt="United States">
+
+								</div>
+							</div>
+
+						<div class="item-title"><h3>United States</h3></div>
+
+					</a>
+				</div>
+								
+				<div data-id="1" class="item item1 image-present">
+					<a href="http://churchofchristglobal.org/loc/albania/">
+						
+
+
+							<div class="item-thumbnail">
+								<div class="item-thumbnail-wrap">
+								{var $image = get_site_url() . "/wp-content/uploads/2016/05/103793-3d-glossy-green-orb-icon-culture-world11-2.png" }
+									<img src="{$image}" alt="Albania">
+
+								</div>
+							</div>
+
+						<div class="item-title"><h3>Albania</h3></div>
+
+					</a>
+				</div>
+				
+				
+				<div data-id="2" style="" class="item item2">
+					<a href="http://churchofchristglobal.org/loc/argentina/">
+						
+
+
+							<div class="item-thumbnail">
+								<div class="item-thumbnail-wrap">
+								{var $image = get_site_url() . "/wp-content/uploads/2016/05/103793-3d-glossy-green-orb-icon-culture-world11-2.png" }
+									<img src="{$image}" alt="Argentina">
+
+								</div>
+							</div>
+
+						<div class="item-title"><h3>Argentina</h3></div>
+
+					</a>
+				</div>
+				
+				<div data-id="3" style="" class="item item3 padd_right_zero" style=" margin-right: 0px; !important;">
+					<a href="http://churchofchristglobal.org/loc/aruba/">
+						
+
+
+							<div class="item-thumbnail">
+								<div class="item-thumbnail-wrap">
+								{var $image = get_site_url() . "/wp-content/uploads/2016/05/103793-3d-glossy-green-orb-icon-culture-world11-2.png" }
+									<img src="{$image}" alt="Aruba">
+
+								</div>
+							</div>
+
+						<div class="item-title"><h3>Aruba</h3></div>
+
+					</a>
+				</div>
+				
+				
+			{/if}
+			{var $i = 0}
 			{foreach $terms as $term}
+				{var $i++}
 				{var $title = $term->name}
 				{var $desc = $term->description}
 				{var $link = get_term_link( $term )}
@@ -84,9 +171,10 @@
 				{if $enableCarousel and $iterator->isFirst($numOfRows)}
 					<div n:class="item-box, $enableCarousel ? carousel-item">
 				{/if}
-				<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $image != "" ? image-present, $boxAlign ? $boxAlign' data-id="{$iterator->counter}">
+								<div n:class='item, "item{$iterator->counter}", $enableCarousel ? carousel-item, $iterator->isFirst($numOfColumns) ? item-first, $iterator->isLast($numOfColumns) ? item-last, $image != "" ? image-present, $boxAlign ? $boxAlign' data-id="{$iterator->counter}">
+
 					<a href="{$link}">
-						{if $image}
+						
 
 							{if $imageHeight == "small" || $imageHeight == "medium" || $imageHeight == "large"}
 								{var $ratio = explode(":", "1:1")}
@@ -97,12 +185,13 @@
 							{var $imgHeight = ($imgWidth / $ratio[0]) * $ratio[1]}
 							<div class="item-thumbnail">
 								<div class="item-thumbnail-wrap">
-
+						{if $term->taxonomy == 'ait-locations'}
+						{var $image = get_site_url() . "/wp-content/uploads/2016/05/103793-3d-glossy-green-orb-icon-culture-world11-2.png" }
+					{/if}
 									<img src="{imageUrl $image, width => $imgWidth, height => $imgHeight, crop => 1}" alt="{!$title}">
 
 								</div>
 							</div>
-						{/if}
 
 						<div class="item-title"><h3>{!$title}</h3></div>
 
